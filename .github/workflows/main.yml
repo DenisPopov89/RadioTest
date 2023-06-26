@@ -1,10 +1,6 @@
 name: Java CI with Maven
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -17,12 +13,6 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
+        distribution: 'adopt'
     - name: Build with Maven
-      run: mvn -B clean package --file pom.xml
-    - name: Run tests
-      run: mvn test --file pom.xml
-    - name: Upload code coverage report
-      uses: actions/upload-artifact@v2
-      with:
-        name: coverage-report
-        path: target/site/jacoco/index.html
+      run: mvn -B -e verify
